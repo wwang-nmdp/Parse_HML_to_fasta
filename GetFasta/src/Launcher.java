@@ -10,8 +10,8 @@ public class Launcher {
 	public static void main(String[] args) {
 	
 		generetor = new FastaGenerator();
-		File folder = new File("./HLAfastaGenerator/input");
-		File outputFolder = new File("./HLAfastaGenerator/output");
+		File folder = new File("./input");
+		File outputFolder = new File("./output");
 		try {
 			FileUtils.cleanDirectory(outputFolder);
 		} catch (IOException e1) {
@@ -31,7 +31,7 @@ public class Launcher {
 	
 	private static void process(File input, String outputName){
 		
-		File output = new File("./HLAfastaGenerator/output/" + outputName +".fasta");
+		File output = new File("./output/" + outputName +".fasta");
 		try{
 			generetor.run(input,output);
 		}catch(Exception e){
