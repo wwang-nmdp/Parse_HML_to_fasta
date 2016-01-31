@@ -13,7 +13,9 @@ public class Launcher {
 		File folder = new File("./input");
 		File outputFolder = new File("./output");
 		try {
-			FileUtils.cleanDirectory(outputFolder);
+			if(outputFolder.exists()){
+				FileUtils.cleanDirectory(outputFolder);
+			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
