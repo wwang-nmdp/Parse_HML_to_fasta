@@ -1,9 +1,13 @@
 # Parse_HML_to_fasta
-Introduction of Parse_HML_to_fasta
-Parse_HML_to_fasta is a java program. It was developed to generator a fasta format files from HML.
+Introduction of Parse_HML_to_fasta.
+
+
+Parse_HML_to_fasta is a java program. It was developed to parse HLA sequences to a fasta format.
 
 The fasta format is begins with a single line description or identifier, followed by lines of sequence data.
-The identifier include sample ID (‘id’), Locus (‘locus’), Type (‘type’), glstring (‘gls’) and Phase-set (‘ps’). Each section divided by vertical bar “ | ”.
+The identifier include sample ID (‘id’), Locus (‘locus’), Type (‘type’), glstring (‘gls’) and Phase-set (‘ps’). 
+
+Each section divided by vertical bar “ | ”.
 
 For example: 
 >id|1235-1677-5|locus|HLA-DRB1|type|03:01:01:01|gls|HLA-DRB1*03:01:01:01/HLA-DRB1*03:01:01:01|PS1
