@@ -26,7 +26,7 @@ public class FastaGenerator {
 	private String sampleID;
 
 	/**
-	 * The method to parse the input file from xml to fasta.
+	 * The method to parse the input file from HML to fasta.
 	 * 
 	 * @param intput The input file.
 	 * @param output The output file.
