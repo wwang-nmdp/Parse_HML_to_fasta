@@ -4,6 +4,9 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+import ParseData.FastaGenerator;
+import databaseAccess.DatabaseUtil;
+
 public class Launcher {
 	private static FastaGenerator generetor;
 
@@ -20,22 +23,24 @@ public class Launcher {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		//connect to database 
+		DatabaseUtil.connectDatabase();
+		DatabaseUtil.createTable();
 		File[] inputList = folder.listFiles();
 		for(int i = 0 ; i < inputList.length; i++){
 			if(inputList[i].getName().contains("xml")){
-				String fileName = FilenameUtils.removeExtension(inputList[i].getName());
-				process(inputList[i], fileName);
+				process(inputList[i]);
 			}
 			
 		}
+		//close database
+		DatabaseUtil.cleanUp();
 
 	}
 	
-	private static void process(File input, String outputName){
-		
-		File output = new File("./output/" + outputName +".fasta");
+	private static void process(File input){
 		try{
-			generetor.run(input,output);
+			generetor.run(input);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
