@@ -141,7 +141,7 @@ public class FastaGenerator {
 	    printAttribute("gls", Gls.get(1));
 	    printSeq("PS2", getPs2(sequenceList));
 	    
-	  //print empty line as divider
+	  //print a new line as divider
 	    pr.println();
 
 	}
@@ -150,7 +150,7 @@ public class FastaGenerator {
 		pr.println(ps);
 		pr.println(seq);}
 		
-	//connect multiple phase-sets by '-' indicates a gap
+	//connect multiple phase-sets by '-' indicates a gap of sequence
 	private String getPs1(NodeList list){
 		if(list.getLength() == 2){
 			Element seq1 = (Element) list.item(0);
