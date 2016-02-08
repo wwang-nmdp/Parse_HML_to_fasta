@@ -130,7 +130,7 @@ public class FastaGenerator {
 	    printAttribute("gls", Gls.get(0));
 	    printSeq("PS1", getPs1(sequenceList));
 	    
-	    //print empty line as divider
+	    //print a new line as divider
 	    pr.println();
 	    
 	    //Print haploid 2
