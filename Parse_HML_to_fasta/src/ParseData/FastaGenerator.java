@@ -115,7 +115,7 @@ public class FastaGenerator {
 	    data1.setPhaseSet("PS1");
 	    data1.setSequence(getPs1(sequenceList));
 	    try {
-			DatabaseUtil.insertRow(data1);
+			DatabaseUtil.insertSeqData(data1);
 		} catch (SQLException e) {
 				
 				System.out.printf("Cant insert duplicate data, sample id is %s, gls is %s  in file %s \n", data1.getSampleId(), data1.getGls(), input.getName());
@@ -134,7 +134,7 @@ public class FastaGenerator {
 	    data2.setPhaseSet("PS2");
 	    data2.setSequence(getPs2(sequenceList));
 	    try {
-			DatabaseUtil.insertRow(data2);
+			DatabaseUtil.insertSeqData(data2);
 		} catch (SQLException e) {
 			System.out.printf("Cant insert duplicate data, sample id is %s, gls is %s  in file %s \n", data1.getSampleId(), data1.getGls(), input.getName());
 		}
