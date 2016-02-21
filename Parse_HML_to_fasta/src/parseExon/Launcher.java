@@ -6,13 +6,10 @@ import databaseAccess.DatabaseUtil;
 
 public class Launcher {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ParseExon pe = new ParseExon();
-		DatabaseUtil.connectDatabase();
-		DatabaseUtil.creatExonTable();
-		pe.run(new File("HLA-DRB1_out.clu"));
-		DatabaseUtil.cleanUp();
-
+		pe.run(new File("TESTHLA-B.clu"), new File("HLA-B.txt"),GeneType.HLA_B);
+		
 	}
 
 }

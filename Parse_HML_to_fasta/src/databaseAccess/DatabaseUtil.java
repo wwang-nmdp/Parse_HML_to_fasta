@@ -1,8 +1,8 @@
 package databaseAccess;
 import java.sql.*;
 
+import HLAGene.ExonIntronData;
 import ParseData.SequenceData;
-import parseExon.ExonIntronData;
 
 public class DatabaseUtil
 {

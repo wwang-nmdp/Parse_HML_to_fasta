@@ -1,8 +1,14 @@
-package parseExon;
-
+package HLAGene;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ExonIntronData {
+import parseExon.BaseFreq;
+import parseExon.GeneSection;
+import parseExon.GeneType;
+
+public abstract class ExonIntronData {
+	
 	private static final char DIVIDER = '-';
 	private String id;
 	private String sampleID;
@@ -34,8 +40,18 @@ public class ExonIntronData {
 	private String exon6_pl = "";
 	private String exon7_pl = "";
 	private String exon8_pl = "";
+	
+	private String fullLength = "";
 
 	
+	public String getFullLength() {
+		return fullLength;
+	}
+
+	public void setFullLength(String fullLength) {
+		this.fullLength = fullLength;
+	}
+
 	public ExonIntronData(String id){
 		this.id = id;
 	}
@@ -204,10 +220,6 @@ public class ExonIntronData {
 	public void setThree_NS(String three_NS) {
 		this.three_NS = three_NS;
 	}
-	
-	
-	
-	
 
 	public String getExon1_pl() {
 		return exon1_pl;
@@ -272,4 +284,35 @@ public class ExonIntronData {
 	public void setExon8_pl(String exon8_pl) {
 		this.exon8_pl = exon8_pl;
 	}
+	
+	protected String filterDivider(String seq){
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < seq.length(); i++){
+			if(seq.charAt(i) != DIVIDER){
+				sb.append(seq.charAt(i));
+			}
+		}
+		return sb.toString();
+	}
+	abstract public void create(String data, List<Integer> extron, List<Integer> intron);
+	
+	abstract public String getCDS();
+	
+	public static ExonIntronData buildHLA(GeneType type, String id) throws Exception {
+		switch (type) {
+		case HLA_AC:
+			return new HLA_AC(id);
+		case HLA_B:
+			return new HLA_B(id);
+		case HLA_DRB1:
+			return new HLA_DRB1(id);
+		case HLA_DQB1:
+			return new HLA_DQB1(id);
+		default:
+			throw new Exception("don't support this type of gene");
+		}
+	}
+	
+	
+
 }
