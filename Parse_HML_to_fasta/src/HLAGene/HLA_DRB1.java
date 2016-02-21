@@ -9,7 +9,7 @@ public class HLA_DRB1 extends ExonIntronData{
 	}
 
 	@Override
-	public void create(String data, List<Integer> indexExon, List<Integer> indexIntron) {
+	public void setExonIntron(String data, List<Integer> indexExon, List<Integer> indexIntron) {
 		
 		setExon2(filterDivider(data.substring(indexExon.get(0), indexExon.get(1)+1)));
 		setExon3(filterDivider(data.substring(indexExon.get(2), indexExon.get(3)+1)));

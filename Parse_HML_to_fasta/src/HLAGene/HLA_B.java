@@ -12,8 +12,14 @@ public class HLA_B extends ExonIntronData{
 		super(id);
 	}
 
+	/**
+	 * Separate exon and intron sequence from original data.
+	 * @param data One line text from alignment file.
+	 * @param extron List of index of exon start and end position.
+	 * @param intron List of index of intron start and end position.
+	 */
 	@Override
-	public void create(String data, List<Integer> indexExon, List<Integer> indexIntron) {
+	public void setExonIntron(String data, List<Integer> indexExon, List<Integer> indexIntron) {
 		if(indexExon.size() != 14 || indexIntron.size() != 16){
 			throw new InvalidParameterException();
 		}

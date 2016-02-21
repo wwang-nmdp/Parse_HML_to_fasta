@@ -16,8 +16,9 @@ public class    ParseExon{
 private GeneType type;
 private Scanner scannerAlign;
 private Scanner scannerFreq;
+//cut the first 50 index since low coverage.
 private int looper = 50;
-private String cDNA;
+private String refSeq;
 private ArrayList<Integer> indexIntron = new ArrayList<Integer>();
 private ArrayList<Integer> indexExon = new ArrayList<Integer>();
 private ArrayList<ExonIntronData> seqList = new ArrayList<ExonIntronData> ();
@@ -28,6 +29,13 @@ private PrintWriter pw;
 private static final char DIVIDER = '-';
 
 
+/**
+ * Input files contains one alignment and frequency table and genetype.
+ * @param align alignment result from Clustal_Omega output in .Clu format.
+ * @param freq 
+ * @param type
+ * @throws Exception
+ */
 	public void run(File align, File freq, GeneType type) throws Exception{
 		inputAlign = align;
 		inputFreq = freq;
@@ -46,7 +54,7 @@ private static final char DIVIDER = '-';
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//skip title
+		//skip title: 8 lines
 		for(int i = 0; i < 8; i++){
 			scannerFreq.nextLine();
 		}
@@ -61,10 +69,11 @@ private static final char DIVIDER = '-';
 			freqList.add(new BaseFreq(lineSc.nextInt(), lineSc.nextInt(), lineSc.nextInt(), lineSc.nextInt()));
 			lineSc.close();
 		}
+		scannerFreq.close();
 		
 	}
 	private void setPrinter() {
-		File output = new File("./testtttt.csv");
+		File output = new File("./HLA-A_polymorphisms.csv");
 		try {
 			pw = new PrintWriter(output);
 		} catch (FileNotFoundException e) {
@@ -73,7 +82,9 @@ private static final char DIVIDER = '-';
 		}
 	}
 	
-	
+	/**
+	 * extra the sequences of exons from alignment results which might contains gaps.
+	 */
 	private void extratExons()  {
 		try {
 			scannerAlign = new Scanner(inputAlign);
@@ -107,12 +118,14 @@ private static final char DIVIDER = '-';
 		ei.setSampleId(split[1]);
 		ei.setGls(split[2]);
 		ei.setPhase(split[3]);
-		ei.create(data, indexExon, indexIntron);
+		ei.setExonIntron(data, indexExon, indexIntron);
 		ei.setFullLength(data);
 		seqList.add(ei);
 	}
 		
-	
+	/**
+	 * find the index of all exon and intron
+	 */
 	private void countExonIndex() {
 		try {
 			scannerAlign = new Scanner(inputAlign);
@@ -125,12 +138,12 @@ private static final char DIVIDER = '-';
 		scannerAlign.nextLine();
 		scannerAlign.nextLine();
 		
-		cDNA = scannerAlign.nextLine();
+		refSeq = scannerAlign.nextLine();
 		//Find the first divider
-		while(cDNA.charAt(looper) != DIVIDER){
+		while(refSeq.charAt(looper) != DIVIDER){
 			looper ++;
 		}
-		while(looper < cDNA.length()){
+		while(looper < refSeq.length()){
 			findIntron();
 			findExon();
 		}
@@ -138,38 +151,38 @@ private static final char DIVIDER = '-';
 		
 	}
 	private void findIntron() {
-		if(looper >= cDNA.length()){
+		if(looper >= refSeq.length()){
 			return;
 		}
-		while(looper < cDNA.length() && !Character.isLowerCase(cDNA.charAt(looper))){
+		while(looper < refSeq.length() && !Character.isLowerCase(refSeq.charAt(looper))){
 			looper++;
 		}
 		int start = looper;
-		while(looper < cDNA.length() && (Character.isLowerCase(cDNA.charAt(looper)) || cDNA.charAt(looper) == DIVIDER) ){
+		while(looper < refSeq.length() && (Character.isLowerCase(refSeq.charAt(looper)) || refSeq.charAt(looper) == DIVIDER) ){
 			looper++;
 		}
 		int end = looper-1;
 		indexIntron.add(start);
 		indexIntron.add(end);
-		System.out.println("intron: "+cDNA.substring(start, end+1));
+		System.out.println("intron: "+refSeq.substring(start, end+1));
 	}
 	
 	private void findExon(){
-		if(looper >= cDNA.length()){
+		if(looper >= refSeq.length()){
 			return;
 		}
-		while(looper < cDNA.length() && Character.isLowerCase(cDNA.charAt(looper)) ){
+		while(looper < refSeq.length() && Character.isLowerCase(refSeq.charAt(looper)) ){
 			looper++;
 		}
 		int start = looper;
-		while(looper < cDNA.length() && (!Character.isLowerCase(cDNA.charAt(looper)) || cDNA.charAt(looper) == DIVIDER)){
+		while(looper < refSeq.length() && (!Character.isLowerCase(refSeq.charAt(looper)) || refSeq.charAt(looper) == DIVIDER)){
 			looper++;
 
 		}
 		int end = looper-1;
 		indexExon.add(start);
 		indexExon.add(end);
-		System.out.println("extron: "+cDNA.substring(start, end+1));
+		System.out.println("extron: "+refSeq.substring(start, end+1));
 	}
 	
 

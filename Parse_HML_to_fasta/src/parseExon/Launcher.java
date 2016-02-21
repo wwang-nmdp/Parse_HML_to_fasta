@@ -8,7 +8,7 @@ public class Launcher {
 
 	public static void main(String[] args) throws Exception {
 		ParseExon pe = new ParseExon();
-		pe.run(new File("TESTHLA-B.clu"), new File("HLA-B.txt"),GeneType.HLA_B);
+		pe.run(new File("HLA_A_Group_out.clu"), new File("HLA-A_Freq.txt"),GeneType.HLA_AC);
 		
 	}
 

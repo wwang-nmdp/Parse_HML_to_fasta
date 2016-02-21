@@ -10,11 +10,11 @@ public class HLA_AC extends ExonIntronData{
 	}
 
 	@Override
-	public void create(String data, List<Integer> indexExon, List<Integer> indexIntron) {
+	public void setExonIntron(String data, List<Integer> indexExon, List<Integer> indexIntron) {
 		if(indexExon.size() != 16 || indexIntron.size() != 18){
 			throw new InvalidParameterException();
 		}
-		//8 exons
+		//8 exons, HLA-A and HLA-C (HLA-AC) contains 8 exons.
 		setExon1(filterDivider(data.substring(indexExon.get(0), indexExon.get(1)+1)));
 		setExon2(filterDivider(data.substring(indexExon.get(2), indexExon.get(3)+1)));
 		setExon3(filterDivider(data.substring(indexExon.get(4), indexExon.get(5)+1)));

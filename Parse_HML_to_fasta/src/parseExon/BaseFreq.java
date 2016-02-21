@@ -45,7 +45,8 @@ public class BaseFreq {
 		StringBuffer sb = new StringBuffer();
 		sb.append(type.toString());
 		sb.append(":");
-		sb.append(position);
+		//fix
+		sb.append(position+1);
 		setTotal();
 		if(c != 'A' && A != 0){
 			sb.append('A');
@@ -72,7 +73,7 @@ public class BaseFreq {
 		}
 		sb.append(">");
 		sb.append(c);
-		sb.append(getFreq(getCount(c)));
+		sb.append(check);
 		sb.append(";");
 		return sb.toString();
 	}

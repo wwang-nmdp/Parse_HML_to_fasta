@@ -32,13 +32,13 @@ public class PolymorphStaticsProessor {
 			pw.print(",");
 			pw.print(data.getCDS());
 			pw.print(",");
-			addSessions(data);
+			findPolymorphism(data);
 			pw.println(",");
 		}
 		pw.close();
 	}
 	
-	 static void addSessions(ExonIntronData data) {
+	 static void findPolymorphism(ExonIntronData data) {
 		 switch(geneType){
 		 case HLA_B:
 			 processSection(GeneSection.US, Math.max(200, indexIntron.get(0)), indexIntron.get(1), data);
@@ -99,7 +99,13 @@ public class PolymorphStaticsProessor {
 				dividerCounter[i] = count;
 			}
 		}
-		
+		/**
+		 * process each sections such as US, DS, exons and introns.
+		 * @param type us, ds, e1, i1,
+		 * @param start start point, start with zero
+		 * @param end end point
+		 * @param data data processed
+		 */
 		public static void processSection(GeneSection type, int start, Integer end, ExonIntronData data) {	
 			for(int i = start; i<= end; i++){
 				if(i<freq.size() && freq.get(i).isValid()){
@@ -107,7 +113,7 @@ public class PolymorphStaticsProessor {
 					String change = freq.get(i).getDiff(type, adjustPosition(i), orignal);
 					if(!change.equals("")){
 						pw.print(change);
-						System.out.println(change);
+						//System.out.println(change);
 					}
 					
 				}else{
@@ -120,7 +126,7 @@ public class PolymorphStaticsProessor {
 		
 		protected static int adjustPosition(int i) {
 			if(i > indexExon.get(0)){
-				return i - dividerCounter[i]; 
+				return i - indexExon.get(0) - dividerCounter[i]; 
 			}else{
 				return i-indexExon.get(0) + dividerCounter[i];
 			}
