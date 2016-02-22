@@ -89,7 +89,7 @@ public abstract class ExonIntronData {
 		return five_NS;
 	}
 
-	public void setFive_NS(String five_NS) {
+	public void setFive_UTR(String five_NS) {
 		this.five_NS = five_NS;
 	}
 

@@ -6,7 +6,7 @@ public class BaseFreq {
 	private int G;
 	private int C;
 	private static int total;
-	private static int RESOLUTION = 5;
+	private static int RESOLUTION = 4;
 	
 	BaseFreq(int a, int t, int g, int c){
 		A = a;

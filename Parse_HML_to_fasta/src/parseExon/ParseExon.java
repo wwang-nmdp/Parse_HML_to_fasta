@@ -16,8 +16,8 @@ public class    ParseExon{
 private GeneType type;
 private Scanner scannerAlign;
 private Scanner scannerFreq;
-//cut the first 50 index since low coverage.
-private int looper = 50;
+//cut the first 100 positions because of the low coverage.
+private int looper = 100;
 private String refSeq;
 private ArrayList<Integer> indexIntron = new ArrayList<Integer>();
 private ArrayList<Integer> indexExon = new ArrayList<Integer>();
@@ -73,7 +73,7 @@ private static final char DIVIDER = '-';
 		
 	}
 	private void setPrinter() {
-		File output = new File("./HLA-A_polymorphisms.csv");
+		File output = new File("./HLA-B_polymorphisms.csv");
 		try {
 			pw = new PrintWriter(output);
 		} catch (FileNotFoundException e) {

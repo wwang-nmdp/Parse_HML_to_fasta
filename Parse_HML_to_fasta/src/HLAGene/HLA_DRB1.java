@@ -22,7 +22,7 @@ public class HLA_DRB1 extends ExonIntronData{
 
 	@Override
 	public String getCDS() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub  
 		return "";
 	}
 
