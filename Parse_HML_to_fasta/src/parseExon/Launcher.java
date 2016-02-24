@@ -10,7 +10,7 @@ public class Launcher {
 		ParseExon pe = new ParseExon();
 		DatabaseUtil.connectDatabase();
 		DatabaseUtil.creatExonTable();
-		pe.run(new File("HLA-DRB1_out.clu"));
+		pe.run(new File("HLA-DQB1_out.clu"));
 		DatabaseUtil.cleanUp();
 
 	}

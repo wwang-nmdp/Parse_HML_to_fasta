@@ -298,7 +298,7 @@ private int end;
 		int end = looper-1;
 		indexExon.add(start);
 		indexExon.add(end);
-		System.out.println("extron: "+cDNA.substring(start, end+1));
+		System.out.println("exon: "+cDNA.substring(start, end+1));
 	}
 	
 
