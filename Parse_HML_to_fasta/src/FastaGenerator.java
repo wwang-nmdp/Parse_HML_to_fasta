@@ -120,15 +120,14 @@ public class FastaGenerator {
 	public void parseTyping(Node hla) {
 		Element element = (Element) hla;
 		NodeList haploids = element.getElementsByTagName("haploid");
-		NodeList  sequenceList = element.getElementsByTagName("consensus-sequence-block");
+		
 		List<String> Gls = getGls(element);
 		// Print haploid 1
 		printSampleID();
 		Element haplod1 = (Element) haploids.item(0);
 		printAttribute(haplod1, "locus");
 		printAttribute(haplod1,"type");
-	    printAttribute("gls", Gls.get(0));
-	    printSeq("PS1", getPs1(sequenceList));
+		printAttributeLast("gls", Gls.get(0));
 	    
 	    //Print a new line as divider
 	    pr.println();
@@ -138,66 +137,24 @@ public class FastaGenerator {
 	    Element haplod2 = (Element) haploids.item(1);
 		printAttribute(haplod2, "locus");
 		printAttribute(haplod2,"type");
-	    printAttribute("gls", Gls.get(1));
-	    printSeq("PS2", getPs2(sequenceList));
+		printAttributeLast("gls", Gls.get(1));
 	    
 	  //Print a new line as divider
 	    pr.println();
 
 	}
 	
-	private void printSeq(String ps, String seq) {
-		pr.println(ps);
-		pr.println(seq);}
-		
-	//Connect multiple phase sets by '-' indicates a gap of sequence
-	private String getPs1(NodeList list){
-		if(list.getLength() == 2){
-			Element seq1 = (Element) list.item(0);
-			return seq1.getElementsByTagName("sequence").item(0).getTextContent();
-		}else{
-			StringBuilder sb = new StringBuilder();
-			for(int i = 0; i< list.getLength(); i++){
-				Element temp = (Element) list.item(i);
-				if(temp.getAttribute("phase-set").equals("1")){
-					if(sb.length() > 0){
-						sb.append("-");
-						sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
-					}else{
-						sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
-					}
-					
-				}
-			}
-			return sb.toString();
-		}
-	}
 	
-	private String getPs2(NodeList list){
-		if(list.getLength() == 2){
-			Element seq1 = (Element) list.item(1);
-			return seq1.getElementsByTagName("sequence").item(0).getTextContent();
-		}else{
-			StringBuilder sb = new StringBuilder();
-			for(int i = 0; i< list.getLength(); i++){
-				Element temp = (Element) list.item(i);
-				if(temp.getAttribute("phase-set").equals("2")){
-					if(sb.length() > 0){
-						sb.append("-");
-						sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
-					}else{
-						sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
-					}
-					
-				}
-			}
-			return sb.toString();
-		}
-	}
 
 	private void printAttribute(String atrrName, String value) {
 		pr.print(atrrName + "|");
 		pr.print(value + "|");
+		
+	}
+	
+	private void printAttributeLast(String atrrName, String value) {
+		pr.print(atrrName + "|");
+		pr.print(value);
 		
 	}
 

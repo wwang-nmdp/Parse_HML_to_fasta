@@ -8,28 +8,34 @@ public class Launcher {
 	private static FastaGenerator generetor;
 
 	public static void main(String[] args) {
-	
-		generetor = new FastaGenerator();
-		File folder = new File("./input");
-		File outputFolder = new File("./output");
+		GLSConverter gc = new GLSConverter();
 		try {
-			if(outputFolder.exists()){
-				FileUtils.cleanDirectory(outputFolder);
-			}
-		} catch (IOException e1) {
+			gc.run("HLA-A*01:01/HLA-A*01:02/HLA-A*01:03");
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			
-			
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
-		File[] inputList = folder.listFiles();
-		for(int i = 0 ; i < inputList.length; i++){
-			if(inputList[i].getName().contains("xml")){
-				String fileName = FilenameUtils.removeExtension(inputList[i].getName());
-				process(inputList[i], fileName);
-			}
-			
-		}
+//		generetor = new FastaGenerator();
+//		File folder = new File("./input");
+//		File outputFolder = new File("./output");
+//		try {
+//			if(outputFolder.exists()){
+//				FileUtils.cleanDirectory(outputFolder);
+//			}
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			
+//			
+//			e1.printStackTrace();
+//		}
+//		File[] inputList = folder.listFiles();
+//		for(int i = 0 ; i < inputList.length; i++){
+//			if(inputList[i].getName().contains("xml")){
+//				String fileName = FilenameUtils.removeExtension(inputList[i].getName());
+//				process(inputList[i], fileName);
+//			}
+//			
+//		}
 
 	}
 	
