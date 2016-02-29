@@ -16,8 +16,9 @@ public class PolymorphStaticsProessor {
 	private static List<Integer> indexIntron;
 	private static PrintWriter pw;
 	private static GeneType geneType;
-	private static int[] dividerCounter;
+	private static int[] adjustPositon;
 	private static final char DIVIDER = '-';
+	private static String processingData;
 	
 	public static void processPolyMoph(GeneType gt, ArrayList<BaseFreq> freq, ArrayList<ExonIntronData> list,List<Integer> indexExon, List<Integer> indexIntron, PrintWriter pw){
 		PolymorphStaticsProessor.freq = freq;
@@ -27,6 +28,7 @@ public class PolymorphStaticsProessor {
 		PolymorphStaticsProessor.pw = pw;
 		geneType = gt;
 		for(ExonIntronData data: list){
+			processingData = data.getFullLength();
 			countDivider(indexExon, data);
 			pw.print(data.getID());
 			pw.print(",");
@@ -83,20 +85,20 @@ public class PolymorphStaticsProessor {
 	 
 		private static void countDivider(List<Integer> indexExon, ExonIntronData data) {
 			String seq = data.getFullLength();
-			dividerCounter = new int[seq.length()];
+			adjustPositon = new int[seq.length()];
 			int count = 0;
 			for(int i = indexExon.get(0); i < seq.length(); i++){
-				if(seq.charAt(i) == DIVIDER){
+				if(seq.charAt(i) != DIVIDER){
 					count++;
 				}
-				dividerCounter[i] = count;
+				adjustPositon[i] = count;
 			}
 			count = 0;
 			for(int i = indexExon.get(0); i >=0; i--){
-				if(seq.charAt(i) == DIVIDER){
-					count++;
+				if(seq.charAt(i) != DIVIDER){
+					count--;
 				}
-				dividerCounter[i] = count;
+				adjustPositon[i] = count;
 			}
 		}
 		/**
@@ -108,9 +110,9 @@ public class PolymorphStaticsProessor {
 		 */
 		public static void processSection(GeneSection type, int start, Integer end, ExonIntronData data) {	
 			for(int i = start; i<= end; i++){
-				if(i<freq.size() && freq.get(i).isValid()){
+				if(i<freq.size() && freq.get(i).isValid() && processingData.charAt(i) != DIVIDER){
 					char orignal = data.getFullLength().charAt(i);
-					String change = freq.get(i).getDiff(type, adjustPosition(i), orignal);
+					String change = freq.get(i).getDiff(type, adjustPositon[i], orignal);
 					if(!change.equals("")){
 						pw.print(change);
 						//System.out.println(change);
@@ -126,9 +128,10 @@ public class PolymorphStaticsProessor {
 		
 		protected static int adjustPosition(int i) {
 			if(i > indexExon.get(0)){
-				return i - indexExon.get(0) - dividerCounter[i]; 
+				return i - indexExon.get(0) - adjustPositon[i]; 
 			}else{
-				return i-indexExon.get(0) + dividerCounter[i];
+				System.out.println(i-indexExon.get(0) + adjustPositon[i]);
+				return i-indexExon.get(0) + adjustPositon[i];
 			}
 		}
 
