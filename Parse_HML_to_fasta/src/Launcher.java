@@ -10,7 +10,7 @@ public class Launcher {
 	public static void main(String[] args) {
 		GLSConverter gc = new GLSConverter();
 		try {
-			gc.run("HLA-A*01:01/HLA-A*01:02/HLA-A*01:03");
+			gc.sendPost();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
