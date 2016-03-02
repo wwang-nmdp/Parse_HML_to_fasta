@@ -24,6 +24,7 @@ public class FastaGenerator {
 	// The print writer to generate output file
 	private PrintWriter pr;
 	private String sampleID;
+	private GLSConverter glsConverter;
 
 	/**
 	 * The method to parse the input file from HML to fasta.
@@ -41,6 +42,7 @@ public class FastaGenerator {
 		this.input = intput;
 		this.output = output;
 
+		glsConverter = new GLSConverter();
 		setupPrinter();
 
 		// Initialize doc
@@ -127,7 +129,13 @@ public class FastaGenerator {
 		Element haplod1 = (Element) haploids.item(0);
 		printAttribute(haplod1, "locus");
 		printAttribute(haplod1,"type");
-		printAttributeLast("gls", Gls.get(0));
+		printAttribute("gls", Gls.get(0));
+		try {
+			pr.print(glsConverter.sendPost(Gls.get(0)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    
 	    //Print a new line as divider
 	    pr.println();
@@ -137,7 +145,13 @@ public class FastaGenerator {
 	    Element haplod2 = (Element) haploids.item(1);
 		printAttribute(haplod2, "locus");
 		printAttribute(haplod2,"type");
-		printAttributeLast("gls", Gls.get(1));
+		printAttribute("gls", Gls.get(1));
+		try {
+			pr.print(glsConverter.sendPost(Gls.get(1)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    
 	  //Print a new line as divider
 	    pr.println();

@@ -8,34 +8,28 @@ public class Launcher {
 	private static FastaGenerator generetor;
 
 	public static void main(String[] args) {
-		GLSConverter gc = new GLSConverter();
+
+	generetor = new FastaGenerator();
+		File folder = new File("./input");
+		File outputFolder = new File("./output");
 		try {
-			gc.sendPost();
-		} catch (Exception e) {
+			if(outputFolder.exists()){
+				FileUtils.cleanDirectory(outputFolder);
+			}
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			
+			e1.printStackTrace();
 		}
-//		generetor = new FastaGenerator();
-//		File folder = new File("./input");
-//		File outputFolder = new File("./output");
-//		try {
-//			if(outputFolder.exists()){
-//				FileUtils.cleanDirectory(outputFolder);
-//			}
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			
-//			
-//			e1.printStackTrace();
-//		}
-//		File[] inputList = folder.listFiles();
-//		for(int i = 0 ; i < inputList.length; i++){
-//			if(inputList[i].getName().contains("xml")){
-//				String fileName = FilenameUtils.removeExtension(inputList[i].getName());
-//				process(inputList[i], fileName);
-//			}
-//			
-//		}
+		File[] inputList = folder.listFiles();
+		for(int i = 0 ; i < inputList.length; i++){
+			if(inputList[i].getName().contains("xml")){
+				String fileName = FilenameUtils.removeExtension(inputList[i].getName());
+				process(inputList[i], fileName);
+			}
+			
+		}
 
 	}
 	
