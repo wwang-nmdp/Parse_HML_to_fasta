@@ -73,7 +73,7 @@ private static final char DIVIDER = '-';
 		
 	}
 	private void setPrinter() {
-		File output = new File("./testHLA-B_polymorphisms.csv");
+		File output = new File("./HLA-A_PolyMoFreq_out.csv");
 		try {
 			pw = new PrintWriter(output);
 		} catch (FileNotFoundException e) {
