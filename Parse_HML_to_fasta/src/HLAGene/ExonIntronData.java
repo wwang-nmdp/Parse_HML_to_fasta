@@ -56,6 +56,10 @@ public abstract class ExonIntronData {
 		this.id = id;
 	}
 	
+	public ExonIntronData(){
+	
+	}
+	
 	public String getID(){
 		return id;
 		
@@ -319,6 +323,21 @@ public abstract class ExonIntronData {
 		}
 	}
 	
+	public static ExonIntronData buildHLA(GeneType type) throws Exception {
+		switch (type) {
+		case HLA_AC:
+			return new HLA_AC();
+		case HLA_B:
+			return new HLA_B();
+		case HLA_DRB1:
+			return new HLA_DRB1();
+		case HLA_DQB1:
+			return new HLA_DQB1();
+		default:
+			throw new Exception("don't support this type of gene");
+		}
+	}
 	
+	abstract public String seqToString();
 
 }

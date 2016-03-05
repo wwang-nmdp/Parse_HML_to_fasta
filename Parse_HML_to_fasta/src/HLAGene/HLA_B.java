@@ -12,6 +12,10 @@ public class HLA_B extends ExonIntronData{
 		super(id);
 	}
 
+	public HLA_B() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Separate exon and intron sequence from original data.
 	 * @param data One line text from alignment file.
@@ -103,6 +107,12 @@ public class HLA_B extends ExonIntronData{
 		sb.append(index);
 		
 		return sb.toString();
+	}
+
+	@Override
+	public String seqToString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

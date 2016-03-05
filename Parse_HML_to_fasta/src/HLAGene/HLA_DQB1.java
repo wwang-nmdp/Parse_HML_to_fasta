@@ -9,6 +9,11 @@ public class HLA_DQB1 extends ExonIntronData{
 	}
 
 
+	public HLA_DQB1() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public void setExonIntron(String data, List<Integer> indexExon, List<Integer> indexIntron) {
 	
@@ -27,6 +32,13 @@ public class HLA_DQB1 extends ExonIntronData{
 	public String getCDS() {
 		// TODO Auto-generated method stub
 		return "";
+	}
+
+
+	@Override
+	public String seqToString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

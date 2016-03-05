@@ -9,6 +9,10 @@ public class HLA_AC extends ExonIntronData{
 		super(id);
 	}
 
+	public HLA_AC() {
+		
+	}
+
 	@Override
 	public void setExonIntron(String data, List<Integer> indexExon, List<Integer> indexIntron) {
 		if(indexExon.size() != 16 || indexIntron.size() != 18){
@@ -102,6 +106,44 @@ public class HLA_AC extends ExonIntronData{
 		index += this.getExon8().length();
 		sb.append(index);
 		
+		return sb.toString();
+	}
+	
+	public String seqToString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.getFive_NS());
+		sb.append(",");
+		sb.append(this.getExon1());
+		sb.append(",");
+		sb.append(this.getIntron1());
+		sb.append(",");
+		sb.append(this.getExon2());
+		sb.append(",");
+		sb.append(this.getIntron2());
+		sb.append(",");
+		sb.append(this.getExon3());
+		sb.append(",");
+		sb.append(this.getIntron3());
+		sb.append(",");
+		sb.append(this.getExon4());
+		sb.append(",");
+		sb.append(this.getIntron4());
+		sb.append(",");
+		sb.append(this.getExon5());
+		sb.append(",");
+		sb.append(this.getIntron5());
+		sb.append(",");
+		sb.append(this.getExon6());
+		sb.append(",");
+		sb.append(this.getIntron6());
+		sb.append(",");
+		sb.append(this.getExon7());
+		sb.append(",");
+		sb.append(this.getIntron7());
+		sb.append(",");
+		sb.append(this.getExon8());
+		sb.append(",");
+		sb.append(this.getThree_NS());
 		return sb.toString();
 	}
 

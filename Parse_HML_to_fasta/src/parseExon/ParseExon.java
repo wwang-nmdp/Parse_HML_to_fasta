@@ -9,73 +9,60 @@ import java.util.Scanner;
 
 import HLAGene.ExonIntronData;
 import HLAGene.HLA_B;
+import config.Config;
 import databaseAccess.DatabaseUtil;
 import statics.PolymorphStaticsProessor;
 
 public class    ParseExon{
-private GeneType type;
-private Scanner scannerAlign;
-private Scanner scannerFreq;
+protected GeneType type;
+protected Scanner scannerAlign;
+
 //cut the first 100 positions because of the low coverage.
-private int looper = 100;
+private int looper = 0;
 private String refSeq;
-private ArrayList<Integer> indexIntron = new ArrayList<Integer>();
-private ArrayList<Integer> indexExon = new ArrayList<Integer>();
-private ArrayList<ExonIntronData> seqList = new ArrayList<ExonIntronData> ();
-private ArrayList<BaseFreq> freqList = new ArrayList<BaseFreq>();
-private File inputAlign;
-private File inputFreq;
-private PrintWriter pw;
+protected ArrayList<Integer> indexIntron = new ArrayList<Integer>();
+protected ArrayList<Integer> indexExon = new ArrayList<Integer>();
+
+protected ArrayList<BaseFreq> freqList = new ArrayList<BaseFreq>();
+protected File inputAlign;
+protected PrintWriter pwExon;
+protected PrintWriter pwFreq;
 private static final char DIVIDER = '-';
 
 
-/**
- * Input files contains one alignment and frequency table and genetype.
- * @param align alignment result from Clustal_Omega output in .Clu format.
- * @param freq 
- * @param type
- * @throws Exception
- */
-	public void run(File align, File freq, GeneType type) throws Exception{
-		inputAlign = align;
-		inputFreq = freq;
-		this.type = type;
+
+	
+	/**
+	 * Input files contains one alignment and frequency table and genetype.
+	 * @param align alignment result from Clustal_Omega output in .Clu format.
+	 * @param freq 
+	 * @param type
+	 * @throws Exception
+	 */
+		public ParseExon(File align, GeneType type) throws Exception{
+			inputAlign = align;
+			this.type = type;
+		}
 		
+	public void run(){
+		setup();
+		process();
+	}
+	
+	public void setup(){
 		setPrinter();
 		countExonIndex();
 		extratExons();
-		extraFreq();
-		PolymorphStaticsProessor.processPolyMoph(type, freqList, seqList, indexExon, indexIntron, pw);
 	}
-	private void extraFreq() {
-		try {
-			scannerFreq = new Scanner(inputFreq);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//skip title: 8 lines
-		for(int i = 0; i < 8; i++){
-			scannerFreq.nextLine();
-		}
-		while(scannerFreq.hasNextLine()){
-			String line = scannerFreq.nextLine();
-			Scanner lineSc = new Scanner(line);
-			if(!lineSc.hasNextInt()){
-				lineSc.close();
-				return;
-			}
-			lineSc.nextInt();	
-			freqList.add(new BaseFreq(lineSc.nextInt(), lineSc.nextInt(), lineSc.nextInt(), lineSc.nextInt()));
-			lineSc.close();
-		}
-		scannerFreq.close();
-		
+	
+	public void process(){
+		pwExon.close();
 	}
-	private void setPrinter() {
-		File output = new File("./testHLA-B_polymorphisms.csv");
+	
+	public void setPrinter() {
+		File output = new File(Config.exonDataFile);
 		try {
-			pw = new PrintWriter(output);
+			pwExon = new PrintWriter(output);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,20 +94,29 @@ private static final char DIVIDER = '-';
 		}
 		scannerAlign.close();
 	}
-	private void processSample(String data) throws Exception {
+	
+	public void processSample(String data) throws Exception {
 		if(data.charAt(0) == ' '){
 			//If the data is the last line, do not process
 			return;
 		}
 		//split the data by white space or |
 		String[] split = data.split(" |\\|");
-		ExonIntronData ei = ExonIntronData.buildHLA(type, split[0]);
-		ei.setSampleId(split[1]);
-		ei.setGls(split[2]);
-		ei.setPhase(split[3]);
+		ExonIntronData ei = ExonIntronData.buildHLA(type);
+		ei.setSampleId(split[0]);
+		ei.setGls(split[1]);
+		ei.setPhase(split[2]);
 		ei.setExonIntron(data, indexExon, indexIntron);
-		ei.setFullLength(data);
-		seqList.add(ei);
+		pwExon.print(ei.getSampleID());
+		pwExon.print(",");
+		pwExon.print(ei.getGls());
+		pwExon.print(",");
+		pwExon.print(ei.getPhase());
+		pwExon.print(",");
+		pwExon.print(ei.getCDS());
+		pwExon.print(",");
+		pwExon.println(ei.seqToString());
+		
 	}
 		
 	/**
@@ -139,10 +135,8 @@ private static final char DIVIDER = '-';
 		scannerAlign.nextLine();
 		
 		refSeq = scannerAlign.nextLine();
-		//Find the first divider
-		while(refSeq.charAt(looper) != DIVIDER){
-			looper ++;
-		}
+		String[] data = refSeq.split(" +");
+		looper = data[0].length();
 		while(looper < refSeq.length()){
 			findIntron();
 			findExon();
