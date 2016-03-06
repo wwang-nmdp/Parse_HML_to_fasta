@@ -1,3 +1,4 @@
+package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -131,7 +132,7 @@ public class FastaGenerator {
 		printAttribute(haplod1,"type");
 		printAttribute("gls", Gls.get(0));
 		try {
-			pr.print(glsConverter.sendPost(Gls.get(0)));
+			pr.print(glsConverter.encode(Gls.get(0)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,7 +148,7 @@ public class FastaGenerator {
 		printAttribute(haplod2,"type");
 		printAttribute("gls", Gls.get(1));
 		try {
-			pr.print(glsConverter.sendPost(Gls.get(1)));
+			pr.print(glsConverter.encode(Gls.get(1)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
