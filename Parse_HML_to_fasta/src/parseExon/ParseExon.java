@@ -3,11 +3,8 @@ package parseExon;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import databaseAccess.DatabaseUtil;
 
 public class    ParseExon{
 private static final char DIVIDER = '-';
@@ -157,13 +154,6 @@ private int end;
 			caculatePL(data, ei);
 		}
 		
-		
-		try {
-			DatabaseUtil.insertExonData(ei);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 	}
 	

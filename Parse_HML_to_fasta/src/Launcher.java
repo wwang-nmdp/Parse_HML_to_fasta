@@ -24,8 +24,8 @@ public class Launcher {
 			e1.printStackTrace();
 		}
 		//connect to database 
-		DatabaseUtil.connectDatabase();
-		DatabaseUtil.createTable();
+//		DatabaseUtil.connectDatabase();
+//		DatabaseUtil.createTable();
 		File[] inputList = folder.listFiles();
 		for(int i = 0 ; i < inputList.length; i++){
 			if(inputList[i].getName().contains("xml")){
@@ -34,7 +34,7 @@ public class Launcher {
 			
 		}
 		//close database
-		DatabaseUtil.cleanUp();
+//		DatabaseUtil.cleanUp();
 
 	}
 	
