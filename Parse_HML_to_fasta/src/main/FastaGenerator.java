@@ -26,6 +26,17 @@ public class FastaGenerator {
 	private PrintWriter pr;
 	private String sampleID;
 	private GLSConverter glsConverter;
+	private Mode mode;
+	private boolean expand;
+	
+	public FastaGenerator(Mode mode){
+		this.mode = mode;
+	}
+
+	public FastaGenerator(Mode mode, boolean expand){
+		this.mode = mode;
+		this.expand = expand;
+	}
 
 	/**
 	 * The method to parse the input file from HML to fasta.
@@ -123,6 +134,7 @@ public class FastaGenerator {
 	public void parseTyping(Node hla) {
 		Element element = (Element) hla;
 		NodeList haploids = element.getElementsByTagName("haploid");
+		NodeList  sequenceList = element.getElementsByTagName("consensus-sequence-block");
 		
 		List<String> Gls = getGls(element);
 		// Print haploid 1
@@ -130,36 +142,73 @@ public class FastaGenerator {
 		Element haplod1 = (Element) haploids.item(0);
 		printAttribute(haplod1, "locus");
 		printAttribute(haplod1,"type");
-		printAttribute("gls", Gls.get(0));
-		try {
-			pr.print(glsConverter.encode(Gls.get(0)));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		switch(mode){
+		case None:
+				printAttributeLast("gls", Gls.get(0));
+				break;
+		case Decode:
+			printAttribute("gls", Gls.get(0));
+			try {
+				pr.print(glsConverter.decode(Gls.get(0), expand));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case Encode:
+			printAttribute("gls", Gls.get(0));
+			try {
+				pr.print(glsConverter.encode(Gls.get(0)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
 		}
-	    
-	    //Print a new line as divider
-	    pr.println();
+		printSeq("|PS1", getPs1(sequenceList));
+		
 	    
 	    //Print haploid 2
 	    printSampleID();
 	    Element haplod2 = (Element) haploids.item(1);
 		printAttribute(haplod2, "locus");
 		printAttribute(haplod2,"type");
-		printAttribute("gls", Gls.get(1));
 		try {
 			pr.print(glsConverter.encode(Gls.get(1)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		switch(mode){
+		case None:
+				printAttributeLast("gls", Gls.get(1));
+				break;
+		case Decode:
+			printAttribute("gls", Gls.get(1));
+			try {
+				pr.print(glsConverter.decode(Gls.get(1), expand));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case Encode:
+			printAttribute("gls", Gls.get(0));
+			try {
+				pr.print(glsConverter.encode(Gls.get(1)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		}
+		printSeq("|PS2", getPs2(sequenceList));
 	    
 	  //Print a new line as divider
 	    pr.println();
 
 	}
 	
-	
+	private void printSeq(String ps, String seq) {
+		pr.println(ps);
+		pr.println(seq);}
 
 	private void printAttribute(String atrrName, String value) {
 		pr.print(atrrName + "|");
@@ -239,6 +288,57 @@ public class FastaGenerator {
 		return result;
 		
 	}
+	
+	//Connect multiple phase sets by '-' indicates a gap of sequence
+		private String getPs1(NodeList list){
+			if(list.getLength() == 0){
+				return "null";
+			}
+			else if(list.getLength() == 2){
+				Element seq1 = (Element) list.item(0);
+				return seq1.getElementsByTagName("sequence").item(0).getTextContent();
+			}else{
+				StringBuilder sb = new StringBuilder();
+				for(int i = 0; i< list.getLength(); i++){
+					Element temp = (Element) list.item(i);
+					if(temp.getAttribute("phase-set").equals("1")){
+						if(sb.length() > 0){
+							sb.append("-");
+							sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
+						}else{
+							sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
+						}
+						
+					}
+				}
+				return sb.toString();
+			}
+		}
+		
+		private String getPs2(NodeList list){
+			if(list.getLength() == 0){
+				return "null";
+			}
+			else if(list.getLength() == 2){
+				Element seq1 = (Element) list.item(1);
+				return seq1.getElementsByTagName("sequence").item(0).getTextContent();
+			}else{
+				StringBuilder sb = new StringBuilder();
+				for(int i = 0; i< list.getLength(); i++){
+					Element temp = (Element) list.item(i);
+					if(temp.getAttribute("phase-set").equals("2")){
+						if(sb.length() > 0){
+							sb.append("-");
+							sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
+						}else{
+							sb.append(temp.getElementsByTagName("sequence").item(0).getTextContent());
+						}
+						
+					}
+				}
+				return sb.toString();
+			}
+		}
 
 }
 

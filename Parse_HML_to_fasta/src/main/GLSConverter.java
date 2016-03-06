@@ -50,15 +50,17 @@ public class GLSConverter {
 
 		}
 		
+		
+		
 		// HTTP GET request
 		public String decode(String gls, boolean expand) throws Exception{
-			String url = "http://mn4s35003:8080/mac/api/encode?";
-			String inputGLS = "typing =" + gls;
+			String url = "http://mn4s35003:8080/mac/api/decode?";
+			String inputGLS = "typing=" + gls;
 			String inputExpand;
 			if(expand){
-				inputExpand = "expand = true";
+				inputExpand = "expand=true";
 			}else{
-				inputExpand = "expand = false";
+				inputExpand = "expand=false";
 			}
 			//Build get url string
 			StringBuilder sb = new StringBuilder();
@@ -75,7 +77,7 @@ public class GLSConverter {
 			con.setRequestProperty( "Content-Type", type );
 
 			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("\nSending 'GET' request to URL : " + sb.toString());
 			System.out.println("Response Code : " + responseCode);
 
 			BufferedReader in = new BufferedReader(
