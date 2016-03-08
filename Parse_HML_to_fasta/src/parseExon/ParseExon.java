@@ -3,15 +3,12 @@ package parseExon;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import HLAGene.ExonIntronData;
-import HLAGene.HLA_B;
 import config.Config;
-import databaseAccess.DatabaseUtil;
-import statics.PolymorphStaticsProessor;
+
 
 public class    ParseExon{
 protected GeneType type;
