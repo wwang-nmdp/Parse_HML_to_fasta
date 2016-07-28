@@ -150,7 +150,7 @@ public class FastaGenerator {
 		pr.println(ps);
 		pr.println(seq);}
 		
-	//Connect multiple phase sets by '-' indicates a gap of sequence
+	//Connect multiple phase sets by '-'
 	private String getPs1(NodeList list){
 		if(list.getLength() == 2){
 			Element seq1 = (Element) list.item(0);
