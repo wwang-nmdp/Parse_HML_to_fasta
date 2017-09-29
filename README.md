@@ -41,16 +41,11 @@ TGTTTTCCCGTGTTTGGATTCCTAGAG-TCAACGAGTTTCCCCTCACAAACACCA
 >id|1235-1677-5|locus|HLA-DRB1|type|04:07:01G|gls|HLA-DRB1*04:07:01/HLA-DRB1*04:92|PS2
 TGTTTTCCCTCGTTTGGATTCCTAGAG-TCAACGAGTTTCCCCTCACAAACACCA
 
-How to use this tool:
-1. download jar file from runnable folder
+For using this tool:
+1. Download jar file from runnable folder.
 2. In the same folder of jar file, create two directories: input and output.
 3. Put all your hml files into input folder.
 4. double click jar file.
 
-or Execute it from command line
-1. download jar file from runnable folder, and unzip it.
-2. Inside the unziped folder, create two directories: input and output.
-3. Put all your hml files into input folder.
-4. run "java Launcher"
-
+OR run it by command lines: java -jar hml2fa.jar
 
